@@ -3,90 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cơ Vật Lý - Smart Remote</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Cơ Vật Lý - Remote</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="remote-frame">
-        <!-- Header -->
-        <div class="top-bar">
-            <span>‹</span>
-            <h2>Cơ Vật Lý - Giàn Phơi</h2>
-            <span>•••</span>
+    <div class="remote-card">
+        <!-- Logo Công ty -->
+        <div class="logo-container">
+            <img src="logo.png" alt="Cơ Vật Lý Logo" class="logo-img">
         </div>
+        <h1 class="brand-title">CƠ VẬT LÝ IoT</h1>
 
-        <!-- Lưới nút bấm phía trên -->
-        <div class="grid-container">
-            <button class="grid-btn btn-power" onclick="sendCmd('POWER_TOGGLE')">
-                <span class="icon">⏻</span>
-                <span class="label">Nguồn</span>
+        <!-- Lưới 4 nút điều khiển chính -->
+        <div class="btn-grid">
+            <button class="btn btn-phoi" onclick="sendCmd('PHOI')">
+                <span class="icon">☀️</span>
+                <span>Phơi</span>
             </button>
-            <button class="grid-btn" onclick="sendCmd('AUTO_MODE')">
-                <span class="icon">🔄</span>
-                <span class="label">Tự động</span>
-            </button>
-            <button class="grid-btn" onclick="sendCmd('RAIN_SENSOR')">
+            <button class="btn btn-thu" onclick="sendCmd('THU')">
                 <span class="icon">🌧️</span>
-                <span class="label">Báo mưa</span>
+                <span>Thu</span>
             </button>
-            <button class="grid-btn" onclick="sendCmd('MENU')">
-                <span class="icon">☰</span>
-                <span class="label">Cài đặt</span>
+            <button class="btn btn-auto" onclick="sendCmd('AUTO')">
+                <span class="icon">🔄</span>
+                <span>Tự động</span>
             </button>
-            <button class="grid-btn" onclick="sendCmd('RESET')">
-                <span class="icon">❶</span>
-                <span class="label">Về vị trí</span>
-            </button>
-            <button class="grid-btn" onclick="sendCmd('BACK')">
-                <span class="icon">↩</span>
-                <span class="label">Hủy lệnh</span>
+            <button class="btn btn-home" onclick="sendCmd('HOME')">
+                <span class="icon">🏠</span>
+                <span>Home</span>
             </button>
         </div>
 
-        <!-- Khu vực giữa -->
-        <div class="middle-area">
-            <!-- Nút Đẩy / Thu giàn phơi -->
-            <div class="pill-control">
-                <button class="pill-btn" onclick="sendCmd('DAY_RA')">∧</button>
-                <span class="pill-label">Đẩy/Thu</span>
-                <button class="pill-btn" onclick="sendCmd('THU_VAO')">∨</button>
-            </div>
-
-            <!-- Cụm D-Pad điều hướng -->
-            <div class="center-control">
-                <button class="home-btn" onclick="sendCmd('HOME')">⌂</button>
-                <div class="d-pad">
-                    <button class="d-btn d-up" onclick="sendCmd('STEP_UP')">▲</button>
-                    <button class="d-btn d-down" onclick="sendCmd('STEP_DOWN')">▼</button>
-                    <button class="d-btn d-left" onclick="sendCmd('STEP_LEFT')">◄</button>
-                    <button class="d-btn d-right" onclick="sendCmd('STEP_RIGHT')">►</button>
-                    <button class="d-ok" onclick="sendCmd('STOP')">DỪNG</button>
-                </div>
-            </div>
-
-            <!-- Nút Tốc độ -->
-            <div class="pill-control">
-                <button class="pill-btn" onclick="sendCmd('SPEED_UP')">+</button>
-                <span class="pill-label">Tốc độ</span>
-                <button class="pill-btn" onclick="sendCmd('SPEED_DOWN')">−</button>
-            </div>
-        </div>
-
-        <!-- Hàng nút dưới cùng -->
-        <div class="bottom-bar">
-            <button class="bottom-btn" onclick="sendCmd('EXTRA')">•••</button>
-            <button class="bottom-btn" onclick="sendCmd('MUTE')">🔇</button>
-        </div>
+        <!-- Nút STOP -->
+        <button class="btn btn-stop" onclick="sendCmd('STOP')">
+            <span class="icon">⏹️</span>
+            <span>STOP</span>
+        </button>
     </div>
 
-    <!-- Tích hợp Firebase SDK -->
+    <!-- Firebase SDK Integration -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Thay thông tin URL Firebase Realtime Database của bạn vào đây
         const firebaseConfig = {
             databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com/"
         };
