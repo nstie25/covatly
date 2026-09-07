@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cơ Vật Lý - Smart Remote</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="remote-frame">
+        <!-- Header -->
+        <div class="top-bar">
+            <span>‹</span>
+            <h2>Cơ Vật Lý - Giàn Phơi</h2>
+            <span>•••</span>
+        </div>
+
+        <!-- Lưới nút bấm phía trên -->
+        <div class="grid-container">
+            <button class="grid-btn btn-power" onclick="sendCmd('POWER_TOGGLE')">
+                <span class="icon">⏻</span>
+                <span class="label">Nguồn</span>
+            </button>
+            <button class="grid-btn" onclick="sendCmd('AUTO_MODE')">
+                <span class="icon">🔄</span>
+                <span class="label">Tự động</span>
+            </button>
+            <button class="grid-btn" onclick="sendCmd('RAIN_SENSOR')">
+                <span class="icon">🌧️</span>
+                <span class="label">Báo mưa</span>
+            </button>
+            <button class="grid-btn" onclick="sendCmd('MENU')">
+                <span class="icon">☰</span>
+                <span class="label">Cài đặt</span>
+            </button>
+            <button class="grid-btn" onclick="sendCmd('RESET')">
+                <span class="icon">❶</span>
+                <span class="label">Về vị trí</span>
+            </button>
+            <button class="grid-btn" onclick="sendCmd('BACK')">
+                <span class="icon">↩</span>
+                <span class="label">Hủy lệnh</span>
+            </button>
+        </div>
+
+        <!-- Khu vực giữa -->
+        <div class="middle-area">
+            <!-- Nút Đẩy / Thu giàn phơi -->
+            <div class="pill-control">
+                <button class="pill-btn" onclick="sendCmd('DAY_RA')">∧</button>
+                <span class="pill-label">Đẩy/Thu</span>
+                <button class="pill-btn" onclick="sendCmd('THU_VAO')">∨</button>
+            </div>
+
+            <!-- Cụm D-Pad điều hướng -->
+            <div class="center-control">
+                <button class="home-btn" onclick="sendCmd('HOME')">⌂</button>
+                <div class="d-pad">
+                    <button class="d-btn d-up" onclick="sendCmd('STEP_UP')">▲</button>
+                    <button class="d-btn d-down" onclick="sendCmd('STEP_DOWN')">▼</button>
+                    <button class="d-btn d-left" onclick="sendCmd('STEP_LEFT')">◄</button>
+                    <button class="d-btn d-right" onclick="sendCmd('STEP_RIGHT')">►</button>
+                    <button class="d-ok" onclick="sendCmd('STOP')">DỪNG</button>
+                </div>
+            </div>
+
+            <!-- Nút Tốc độ -->
+            <div class="pill-control">
+                <button class="pill-btn" onclick="sendCmd('SPEED_UP')">+</button>
+                <span class="pill-label">Tốc độ</span>
+                <button class="pill-btn" onclick="sendCmd('SPEED_DOWN')">−</button>
+            </div>
+        </div>
+
+        <!-- Hàng nút dưới cùng -->
+        <div class="bottom-bar">
+            <button class="bottom-btn" onclick="sendCmd('EXTRA')">•••</button>
+            <button class="bottom-btn" onclick="sendCmd('MUTE')">🔇</button>
+        </div>
+    </div>
+
+    <!-- Tích hợp Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Thay thông tin URL Firebase Realtime Database của bạn vào đây
+        const firebaseConfig = {
+            databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com/"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        window.sendCmd = function(cmd) {
+            set(ref(db, 'control/command'), cmd);
+        };
+    </script>
+</body>
+</html>

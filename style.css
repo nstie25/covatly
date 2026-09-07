@@ -1,0 +1,204 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: #e9ecef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 12px;
+}
+
+.remote-frame {
+    width: 100%;
+    max-width: 380px;
+    background: #f8f9fa;
+    border-radius: 36px;
+    padding: 24px 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Header */
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #495057;
+    padding: 0 4px;
+}
+.top-bar h2 {
+    font-size: 16px;
+    font-weight: 600;
+}
+.top-bar span {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Lưới nút bấm phía trên (3x2) */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: #e9ecef;
+    gap: 1px;
+    border-radius: 18px;
+    overflow: hidden;
+}
+.grid-btn {
+    background: #f8f9fa;
+    border: none;
+    padding: 16px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+}
+.grid-btn:active {
+    background: #e9ecef;
+}
+.grid-btn .icon {
+    font-size: 22px;
+}
+.grid-btn .label {
+    font-size: 11px;
+    color: #6c757d;
+    font-weight: 500;
+}
+.btn-power {
+    color: #e63946;
+}
+
+/* Khu vực điều khiển giữa */
+.middle-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+/* Nút hình viên thuốc (Đẩy/Thu & Tốc độ) */
+.pill-control {
+    width: 72px;
+    height: 170px;
+    background: #e9ecef;
+    border-radius: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+}
+.pill-btn {
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    color: #343a40;
+    width: 100%;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.pill-btn:active {
+    opacity: 0.4;
+}
+.pill-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6c757d;
+    text-transform: uppercase;
+}
+
+/* Cụm điều hướng hình tròn D-Pad */
+.center-control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+.home-btn {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: #e9ecef;
+    border: none;
+    font-size: 20px;
+    color: #495057;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.d-pad {
+    width: 170px;
+    height: 170px;
+    background: #e9ecef;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.d-btn {
+    position: absolute;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    color: #343a40;
+    cursor: pointer;
+    padding: 12px;
+}
+.d-up { top: 6px; }
+.d-down { bottom: 6px; }
+.d-left { left: 6px; }
+.d-right { right: 6px; }
+
+.d-ok {
+    width: 80px;
+    height: 80px;
+    background: #f8f9fa;
+    border-radius: 50%;
+    border: none;
+    font-weight: 700;
+    font-size: 15px;
+    color: #212529;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    cursor: pointer;
+}
+.d-ok:active {
+    transform: scale(0.95);
+}
+
+/* Hàng nút dưới cùng */
+.bottom-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 12px;
+}
+.bottom-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #e9ecef;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #495057;
+    cursor: pointer;
+}
