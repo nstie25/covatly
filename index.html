@@ -1,62 +1,146 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cơ Vật Lý - Remote</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đồ Án Nhập Môn Kỹ Thuật - Giàn Phơi Tự Động Thông Minh</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
-<body>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen p-4 md:p-8">
 
-    <div class="remote-card">
-        <!-- Logo Công ty -->
-        <div class="logo-container">
-            <img src="logo.png" alt="Cơ Vật Lý Logo" class="logo-img">
+  <!-- Header -->
+  <header class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center mb-6 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 gap-4">
+    <div>
+      <div class="inline-block bg-blue-100 text-blue-700 text-xs font-bold px-2.5 py-1 rounded-md mb-2">
+        ĐỒ ÁN NHẬP MÔN KỸ THUẬT
+      </div>
+      <h1 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <i class="fa-solid fa-shirt text-blue-600"></i> Giàn Phơi Đồ Tự Động Hóa Thông Minh
+      </h1>
+      <p class="text-xs text-slate-500 mt-1">
+        Khoa Khoa học Ứng dụng | Trường ĐH Bách Khoa - ĐHQG-HCM
+      </p>
+    </div>
+    
+    <div class="flex flex-wrap items-center gap-2">
+      <!-- Nút Home dẫn về /home -->
+      <a href="/home" class="px-3.5 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-full flex items-center gap-1.5 transition shadow-sm">
+        <i class="fa-solid fa-house"></i> Home
+      </a>
+      <span id="conn-status" class="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-full flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Hệ Thống Sẵn Sàng
+      </span>
+      <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full border border-slate-200">
+        Khóa 2026
+      </span>
+    </div>
+  </header>
+
+  <!-- Main Grid Layout -->
+  <main class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    <!-- Card 1: Cảm biến môi trường & An toàn -->
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+      <h2 class="text-base font-bold mb-4 text-slate-700 flex items-center gap-2">
+        <i class="fa-solid fa-cloud-sun text-amber-500"></i> Cảm Biến & An Toàn Cáp
+      </h2>
+      
+      <div class="space-y-4">
+        <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl border border-slate-100">
+          <span class="text-sm text-slate-600">Cảm biến mưa:</span>
+          <span id="rain-status" class="font-bold text-blue-600">Trời Khô Ráo</span>
         </div>
-        <h1 class="brand-title">CƠ VẬT LÝ </h1>
 
-        <!-- Lưới 4 nút điều khiển chính -->
-        <div class="btn-grid">
-            <button class="btn btn-phoi" onclick="sendCmd('PHOI')">
-                <span class="icon">☀️</span>
-                <span>Phơi</span>
-            </button>
-            <button class="btn btn-thu" onclick="sendCmd('THU')">
-                <span class="icon">🌧️</span>
-                <span>Thu</span>
-            </button>
-            <button class="btn btn-auto" onclick="sendCmd('AUTO')">
-                <span class="icon">🔄</span>
-                <span>Tự động</span>
-            </button>
-            <button class="btn btn-home" onclick="window.location.href='/home'">
-                <span class="icon">🏠</span>
-                <span>Home</span>
-            </button>
+        <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl border border-slate-100">
+          <span class="text-sm text-slate-600">Nhiệt độ / Độ ẩm:</span>
+          <span class="font-bold text-slate-700"><span id="temp-val">30</span>°C / <span id="hum-val">65</span>%</span>
         </div>
 
-        <!-- Nút STOP -->
-        <button class="btn btn-stop" onclick="sendCmd('STOP')">
-            <span class="icon">⏹️</span>
-            <span>STOP</span>
-        </button>
+        <div id="tangle-box" class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-emerald-600"></i>
+            <span class="text-sm font-medium text-emerald-800">Cáp treo (Anti-tangle):</span>
+          </div>
+          <span id="tangle-status" class="text-[11px] font-bold uppercase bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded">Ổn Định</span>
+        </div>
+      </div>
     </div>
 
-    <!-- Firebase SDK Integration -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    <!-- Card 2: Điều khiển nâng hạ -->
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+      <div>
+        <h2 class="text-base font-bold mb-4 text-slate-700 flex items-center gap-2">
+          <i class="fa-solid fa-arrows-up-down text-blue-600"></i> Cơ Cấu Thanh Xà Nâng Hạ
+        </h2>
 
-        const firebaseConfig = {
-            databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com/"
-        };
+        <div class="text-center my-3">
+          <div class="text-3xl font-black text-blue-700" id="height-val">50%</div>
+          <span class="text-xs text-slate-400 uppercase tracking-wider">Độ hạ thích ứng trần</span>
+        </div>
 
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+        <input type="range" id="height-slider" min="0" max="100" value="50" class="w-full accent-blue-600 cursor-pointer mb-6">
 
-        window.sendCmd = function(cmd) {
-            set(ref(db, 'control/command'), cmd);
-        };
-    </script>
+        <div class="grid grid-cols-2 gap-3">
+          <button id="btn-lift" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2.5 rounded-xl transition flex justify-center items-center gap-2 shadow-sm">
+            <i class="fa-solid fa-arrow-up"></i> Thu Lên Trần
+          </button>
+          <button id="btn-lower" class="bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-sm font-semibold py-2.5 rounded-xl transition flex justify-center items-center gap-2">
+            <i class="fa-solid fa-arrow-down"></i> Hạ Phơi Đồ
+          </button>
+        </div>
+      </div>
+
+      <button id="btn-estop" class="w-full mt-4 bg-rose-600 hover:bg-rose-700 text-white font-bold py-2 rounded-xl text-sm transition shadow-sm">
+        Dừng Khẩn Cấp (E-Stop)
+      </button>
+    </div>
+
+    <!-- Card 3: Làm khô & Hẹn giờ -->
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+      <h2 class="text-base font-bold mb-4 text-slate-700 flex items-center gap-2">
+        <i class="fa-solid fa-wind text-indigo-500"></i> Làm Khô & Hẹn Giờ
+      </h2>
+
+      <div class="space-y-4">
+        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+          <span class="text-sm font-medium text-slate-700">Quạt đối lưu / Sấy:</span>
+          <button id="dryer-btn" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-slate-200 text-slate-600 transition">
+            TẮT
+          </button>
+        </div>
+
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+          <label class="text-xs font-semibold text-slate-500 block mb-1">Giờ tự động hạ thanh xà (Phơi đồ):</label>
+          <input type="time" id="schedule-drop" value="07:30" class="w-full bg-white border border-slate-200 rounded-lg px-2 py-1 text-sm font-medium outline-none focus:border-blue-500">
+        </div>
+
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+          <label class="text-xs font-semibold text-slate-500 block mb-1">Giờ tự động thu lên (Thu gom):</label>
+          <input type="time" id="schedule-lift" value="17:30" class="w-full bg-white border border-slate-200 rounded-lg px-2 py-1 text-sm font-medium outline-none focus:border-blue-500">
+        </div>
+
+        <button id="btn-save-schedule" class="w-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold py-2.5 rounded-xl transition">
+          Lưu Lịch Trình Tự Động
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="max-w-5xl mx-auto mt-8 text-center text-xs text-slate-400">
+    Đồ án môn Nhập môn Kỹ thuật &bull; Khoa Khoa học Ứng dụng &bull; Trường ĐH Bách Khoa - ĐHQG-HCM
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
