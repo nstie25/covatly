@@ -1,119 +1,17 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    -webkit-tap-highlight-color: transparent;
-}
-
+/* Custom Styles */
 body {
-    background-color: #f1f5f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 16px;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.remote-card {
-    width: 100%;
-    max-width: 360px;
-    background: #ffffff;
-    border-radius: 28px;
-    padding: 32px 24px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e2e8f0;
-    text-align: center;
+input[type=range] {
+  height: 6px;
+  border-radius: 5px;
 }
 
-/* Vùng Logo */
-.logo-container {
-    margin-bottom: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+button, a {
+  user-select: none;
 }
 
-.logo-img {
-    width: 85px;
-    height: auto;
-    object-fit: contain;
-}
-
-.brand-title {
-    font-size: 16px;
-    font-weight: 800;
-    color: #005a9c;
-    letter-spacing: 1px;
-    margin-bottom: 24px;
-    text-transform: uppercase;
-}
-
-/* Lưới nút bấm (Grid 2x2) */
-.btn-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 12px;
-}
-
-.btn {
-    border: none;
-    border-radius: 18px;
-    padding: 20px 12px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: all 0.15s ease-in-out;
-}
-
-.btn:active {
-    transform: scale(0.95);
-}
-
-.btn .icon {
-    font-size: 24px;
-}
-
-/* Định dạng màu sắc từng nút */
-.btn-phoi {
-    background: #005a9c;
-    color: #ffffff;
-}
-
-.btn-thu {
-    background: #fef2f2;
-    color: #ef4444;
-    border: 1px solid #fca5a5;
-}
-
-.btn-auto {
-    background: #f8fafc;
-    color: #334155;
-    border: 1px solid #e2e8f0;
-}
-
-.btn-home {
-    background: #f8fafc;
-    color: #334155;
-    border: 1px solid #e2e8f0;
-}
-
-/* Nút STOP full width phía dưới */
-.btn-stop {
-    width: 100%;
-    background: #0f172a;
-    color: #ffffff;
-    padding: 16px;
-    flex-direction: row;
-    border-radius: 16px;
-}
-
-.btn-stop:hover {
-    background: #1e293b;
+button:active, a:active {
+  transform: scale(0.98);
 }
